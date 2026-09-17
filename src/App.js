@@ -113,9 +113,14 @@ function NewFactForm({ setFacts, setShowForm }) {
   const [isUploading, setIsUploading] = useState(false);
   const textLength = text.length;
 
-  async function handleSubmit(e) {
+    async function handleSubmit(e) {
     e.preventDefault();
-    // ... (je bestaande validatie-checks voor tekst en bron kunnen blijven staan)
+
+    // 1. VALIDATIE: Controleer of alle velden zijn ingevuld én of de bron een geldige URL is
+    if (!text || !category || !isValidHttpUrl(source) || text.length > 200) {
+      alert("Please provide a valid fact (max 200 characters), a category, and a trustworthy HTTP/HTTPS URL source.");
+      return; // Stop de functie direct als de data niet klopt
+    }
 
     setIsUploading(true);
     
@@ -133,7 +138,7 @@ function NewFactForm({ setFacts, setShowForm }) {
       // Voeg het nieuwe feitje toe aan de state zodat het live op het scherm verschijnt
       setFacts((facts) => [newFact, ...facts]);
       
-      // Reset het formulier (je bestaande code)
+      // Reset het formulier
       setText("");
       setSource("");
       setCategory("");
@@ -144,6 +149,7 @@ function NewFactForm({ setFacts, setShowForm }) {
       setIsUploading(false);
     }
   }
+
 
   return (
     <form className="fact-form" onSubmit={handleSubmit}>
