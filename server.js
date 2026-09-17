@@ -18,7 +18,7 @@ app.get('/*splat', (req, res) => {
 
 
 // 1. Maak of open de SQLite database
-const db = new sqlite3.Database('./today_i_learned.db', (err) => {
+const db = new sqlite3.Database(path.join(__dirname, 'today_i_learned.db'), (err) => {
   if (err) console.error('Database fout:', err.message);
   else console.log('Verbonden met de lokale SQLite database.');
 });
