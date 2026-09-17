@@ -37,7 +37,7 @@ db.serialize(() => {
 
         const initialFacts = [
           { text: "The shortest war in history lasted 38 minutes! It was between Britain and Zanzibar on August 27, 1896.", source: "https://historic-uk.com", category: "history", votesInteresting: 15, votesMindblowing: 8, votesFalse: 2 },
-          { text: "The first 1GB hard drive was made in 1980 and had a price of \$40,000!", source: "https://autodesk.com", category: "history", votesInteresting: 4, votesMindblowing: 1, votesFalse: 0 },
+          { text: "The first 1GB hard drive was made in 1980 and had a price of $40,000!", source: "https://autodesk.com", category: "history", votesInteresting: 4, votesMindblowing: 1, votesFalse: 0 },
           { text: '"typewriter" is the longest English word you can type using 1 row of the QWERTY keyboard', source: "https://twitter.com", category: "technology", votesInteresting: 9, votesMindblowing: 1, votesFalse: 0 },
           { text: "Human DNA is 99.9% identical from person to person", source: "https://genome.gov", category: "science", votesInteresting: 4, votesMindblowing: 9, votesFalse: 1 },
           { text: "The less money you spend, the more you save!", source: "https://bankofamerica.com", category: "finance", votesInteresting: 2, votesMindblowing: 1, votesFalse: 0 },
@@ -83,9 +83,13 @@ app.post('/api/facts', (req, res) => {
 });
 
 // Route C: Stemmen updaten
+// Route C: Stemmen updaten (Gecorrigeerd zonder backslashes)
 app.post('/api/facts/:id/vote', (req, res) => {
   const { columnName } = req.body;
-  const sql = `UPDATE facts SET \${columnName} = \${columnName} + 1 WHERE id = ?`;
+  
+  // De backslashes zijn hier weggehaald zodat \${columnName} een echte variabele wordt!
+  const sql = `UPDATE facts SET ${columnName} = ${columnName} + 1 WHERE id = ?`;
+  
   db.run(sql, [req.params.id], function(err) {
     if (err) return res.status(500).json({ error: err.message });
     db.get("SELECT * FROM facts WHERE id = ?", [req.params.id], (err, row) => {
