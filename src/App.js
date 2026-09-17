@@ -66,7 +66,7 @@ function Header({ showForm, setShowForm }) {
     <header className="header">
       <div className="logo">
         <img
-          src="img/logo.png"
+          src="img/favicon-192x192.png"
           height="68"
           width="68"
           alt="Today I Learned Logo"
