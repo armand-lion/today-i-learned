@@ -12,7 +12,7 @@ const path = require('path');
 app.use(express.static(path.join(__dirname, 'build'))); 
 
 // Zorg dat alle overige routes (behalve je /api/ routes) de index.html laden
-app.get('(.*)', (req, res) => {
+app.get('/*splat', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
