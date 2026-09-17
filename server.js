@@ -168,4 +168,6 @@ app.post('/api/facts/:id/vote', (req, res) => {
   });
 });
 
-app.listen(5000, () => console.log('Backend server draait op http://localhost:5000'));
+// Gebruik de poort van Render, en val pas terug op 5000 als je lokaal test
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`--> Backend server draait op poort ${PORT}`));
